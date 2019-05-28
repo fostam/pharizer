@@ -28,10 +28,13 @@ class Builder {
         $this->config = $config;
     }
 
-    public function build(Target $target) {
+    /**
+     * @param Target $target
+     */
+    public function build(Target $target): void {
         // TODO test
-        $it = FileIterator::create($target);
-        foreach($it as $file) {
+        $iterator = FileIterator::create($target);
+        foreach($iterator as $file) {
             /** @var SplFileInfo $file */
             print $file->getPathname() . "\n";
         }

@@ -42,8 +42,8 @@ class ListFiles extends Command {
         foreach($targetList as $target) {
             /** @var Target $target */
             print "=== {$target->getName()} ===\n";
-            $it = FileIterator::create($target);
-            foreach ($it as $file) {
+            $iterator = FileIterator::create($target);
+            foreach ($iterator as $file) {
                 /** @var SplFileInfo $file */
                 $filename = $file->getPathname();
                 $filename = preg_replace('#^' . preg_quote($target->getSourceDirectory(), '#') . '/?#', '', $filename);
