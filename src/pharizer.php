@@ -14,7 +14,7 @@ try {
     $application->run();
 }
 catch (Exception $e) {
-    print "ERROR: " . $e->getMessage() . "\n";
+    fwrite(STDERR, "ERROR: " . $e->getMessage() . "\n");
     exit(1);
 }
 exit(0);
