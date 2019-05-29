@@ -10,12 +10,13 @@ class Targets {
 
     /**
      * Targets constructor.
-     * @param $data
+     * @param string $baseDirectory
+     * @param array $data
      */
-    public function __construct($data) {
+    public function __construct(string $baseDirectory, array $data) {
         foreach($data as $target => $targetData) {
             $targetData[Target::NAME] = $target;
-            $this->targets[$target] = new Target($targetData);
+            $this->targets[$target] = new Target($baseDirectory, $targetData);
         }
     }
 

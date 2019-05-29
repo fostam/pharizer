@@ -8,14 +8,12 @@ use Pharizer\Exception\ConfigSettingWrongTypeException;
 
 class Builder {
     /**
+     * @param string $baseDirectory
      * @param array $configDefinition
      * @param array $data
      * @return array
-     * @throws ConfigEntryMissingException
-     * @throws ConfigSettingWrongTypeException
-     * @throws ConfigSettingInvalidValueException
      */
-    public static function build(array $configDefinition, array $data): array {
+    public static function build(string $baseDirectory, array $configDefinition, array $data): array {
         $config = [];
         foreach($configDefinition as $key => $definition) {
             if (!isset($data[$key])) {
@@ -39,7 +37,7 @@ class Builder {
                     }
                 }
                 else {
-                    $value = new $definition[0]($data[$key]);
+                    $value = new $definition[0]($baseDirectory, $data[$key]);
                 }
             }
 

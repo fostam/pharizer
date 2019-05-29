@@ -30,12 +30,17 @@ class Target {
     /** @var array */
     private $config = [];
 
+    /** @var string */
+    private $baseDirectory;
+
     /**
      * Target constructor.
-     * @param $data
+     * @param string $baseDirectory
+     * @param array $data
      */
-    public function __construct($data) {
-        $this->config = Builder::build($this->configDefinition, $data);
+    public function __construct(string $baseDirectory, array $data) {
+        $this->config = Builder::build($baseDirectory, $this->configDefinition, $data);
+        $this->baseDirectory = $baseDirectory;
 
         if ($this->config[self::EXCLUDE_PHARIZER]) {
             $filters = $this->config[self::FILTERS];
@@ -62,7 +67,7 @@ class Target {
      * @return string
      */
     public function getSourceDirectory(): string {
-        return $this->config[self::SOURCE_DIRECTORY];
+        return $this->baseDirectory . '/' . $this->config[self::SOURCE_DIRECTORY];
     }
 
     /**

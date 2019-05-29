@@ -22,7 +22,10 @@ class Main {
      * @param array $data
      */
     public function __construct(array $data) {
-        $this->config = Builder::build($this->configDefinition, $data);
+        $this->config = Builder::build($data[self::BASE_DIRECTORY], $this->configDefinition, $data);
+        if (!preg_match('#^/#', $this->config[self::TARGET_DIRECTORY])) {
+            $this->config[self::TARGET_DIRECTORY] = $this->config[self::BASE_DIRECTORY] . '/' . $this->config[self::TARGET_DIRECTORY];
+        }
     }
 
     /**
