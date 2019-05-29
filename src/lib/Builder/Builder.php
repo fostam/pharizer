@@ -16,6 +16,10 @@ class Builder {
     private $output;
     /** @var Main */
     private $config;
+    /** @var string */
+    private $filename;
+    /** @var string */
+    private $filenameFinal;
 
     /**
      * Builder constructor.
@@ -35,7 +39,15 @@ class Builder {
      */
     public function build(Target $target): void {
         self::checkSettings();
+
+        // prepare names
+        $this->filename = $this->buildPharFilename($target->getName(), true);
+        $this->filenameFinal = $this->buildPharFilename($target->getName(), false);
+
+        $this->createDestinationPath($this->filename);
         $this->createPhar($target);
+        $this->rename();
+        $this->printResult();
     }
 
     /**
@@ -44,28 +56,36 @@ class Builder {
      */
     private function createPhar(Target $target): void {
         $iterator = FileIterator::create($target);
-
-        // prepare names
-        $filename = $this->buildPharFilename($target->getName(), true);
         $alias = $this->buildPharAlias($target->getName());
-
-        // create destination directory
-        $this->createDestinationPath($filename);
-
-        // build phar
-        $phar = new Phar($filename, 0, $alias);
+        $phar = new Phar($this->filename, 0, $alias);
         $phar->buildFromIterator($iterator, $target->getSourceDirectory());
         $stub = $phar->createDefaultStub($target->getStub());
         $stub = $target->getShebang() . "\n" . $stub;
         $phar->setStub($stub);
+    }
 
+    /**
+     * @throws Exception
+     */
+    private function rename(): void {
         // rename to final name (without forced extension)
-        $filenameFinal = $this->buildPharFilename($target->getName(), false);
-        if ($filenameFinal !== $filename) {
-            if (!rename($filename, $filenameFinal)) {
-                throw new Exception("can't rename '{$filename}' to '{$filenameFinal}'");
+        if ($this->filenameFinal !== $this->filename) {
+            if (!rename($this->filename, $this->filenameFinal)) {
+                throw new Exception("can't rename '{$this->filename}' to '{$this->filenameFinal}'");
             }
         }
+    }
+
+    /**
+     *
+     */
+    public function printResult(): void {
+        if ($this->input->getOption('quiet')) {
+            return;
+        }
+
+        $size = filesize($this->filenameFinal);
+        print "{$this->filenameFinal} built ({$size} bytes)\n";
     }
 
     /**
