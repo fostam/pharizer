@@ -85,7 +85,7 @@ class Builder {
         }
 
         $size = filesize($this->filenameFinal);
-        print "{$this->filenameFinal} built ({$size} bytes)\n";
+        $this->output->writeln("{$this->filenameFinal} built ({$size} bytes)");
     }
 
     /**
