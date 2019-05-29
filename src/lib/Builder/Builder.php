@@ -47,6 +47,7 @@ class Builder {
         $this->createDestinationPath($this->filename);
         $this->createPhar($target);
         $this->rename();
+        $this->makeExecutable();
         $this->printResult();
     }
 
@@ -74,6 +75,14 @@ class Builder {
                 throw new Exception("can't rename '{$this->filename}' to '{$this->filenameFinal}'");
             }
         }
+    }
+
+    /**
+     *
+     */
+    private function makeExecutable(): void {
+        // ignore errors
+        chmod($this->filenameFinal, 0755);
     }
 
     /**
