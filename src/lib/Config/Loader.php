@@ -37,6 +37,8 @@ class Loader {
             throw new Exception("error parsing config YAML");
         }
 
+        $configData[Main::BASE_DIRECTORY] = dirname($filename);
+
         return new Main($configData);
     }
 }

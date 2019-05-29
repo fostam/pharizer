@@ -3,11 +3,13 @@
 namespace Pharizer\Config;
 
 class Main {
+    const BASE_DIRECTORY   = 'base-directory';
     const TARGET_DIRECTORY = 'target-directory';
     const TARGETS          = 'targets';
 
     /** @var array */
     private $configDefinition = [
+        self::BASE_DIRECTORY   => ['string', '.'],
         self::TARGET_DIRECTORY => ['string', '.'],
         self::TARGETS          => [Targets::class, []],
     ];
@@ -21,6 +23,13 @@ class Main {
      */
     public function __construct(array $data) {
         $this->config = Builder::build($this->configDefinition, $data);
+    }
+
+    /**
+     * @return string
+     */
+    public function getBaseDirectory(): string {
+        return $this->config[self::BASE_DIRECTORY];
     }
 
     /**
