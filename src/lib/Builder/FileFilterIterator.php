@@ -32,6 +32,11 @@ class FileFilterIterator extends RecursiveFilterIterator {
 
         $filename = $fileinfo->getPathname();
 
+        // don't apply filter to directories
+        if ($fileinfo->isDir()) {
+            return true;
+        }
+
         // strip source-directory from beginning of path
         $filename = preg_replace('#^' . preg_quote($this->target->getSourceDirectory(), '#') . '/?#', '', $filename);
 
