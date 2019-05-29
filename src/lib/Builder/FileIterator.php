@@ -24,7 +24,7 @@ class FileIterator extends RecursiveIteratorIterator {
      * @return FileIterator
      */
     public static function create(Target $target): FileIterator {
-        $directoryIterator = new RecursiveDirectoryIterator($target->getSourceDirectory(), FilesystemIterator::SKIP_DOTS);
+        $directoryIterator = new RecursiveDirectoryIterator($target->getSourceDirectory(), FilesystemIterator::SKIP_DOTS | FilesystemIterator::FOLLOW_SYMLINKS);
         $filterIterator = new FileFilterIterator($directoryIterator, $target);
         return new self($filterIterator);
     }
