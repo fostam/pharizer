@@ -7,6 +7,7 @@ use Pharizer\Config\Target;
 use RecursiveDirectoryIterator;
 use RecursiveFilterIterator;
 use RecursiveIterator;
+use SplFileInfo;
 
 class FileFilterIterator extends RecursiveFilterIterator {
     /** @var Target */
@@ -26,11 +27,20 @@ class FileFilterIterator extends RecursiveFilterIterator {
      * @return bool
      */
     public function accept(): bool {
-        $filename = $this->current()->getPathname();
+        /** @var SplFileInfo $fileinfo */
+        $fileinfo = $this->current();
+
+        // don't apply filter to directories
+        if ($fileinfo->isDir()) {
+            return true;
+        }
+
+        $filename = $fileinfo->getPathname();
 
         // strip source-directory from beginning of path
         $filename = preg_replace('#^' . preg_quote($this->target->getSourceDirectory(), '#') . '/?#', '', $filename);
 
+        // apply filters one by one
         foreach($this->target->getFilters()->get() as $filter) {
             $matches = $filter->matches($filename);
             if (!$matches) {
