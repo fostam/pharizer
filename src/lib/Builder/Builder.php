@@ -6,6 +6,7 @@ use Phar;
 use Pharizer\Config\Main;
 use Pharizer\Config\Target;
 use Exception;
+use SplFileInfo;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -150,9 +151,20 @@ class Builder {
      * @throws Exception
      */
     private function validateStub(Target $target): void {
-        $stubFile = $target->getSourceDirectory() . '/' . $target->getStub();
+        $stubFile = realpath($target->getSourceDirectory() . '/' . $target->getStub());
         if (!file_exists($stubFile)) {
             throw new Exception("stub file '{$stubFile}' does not exist");
         }
+
+        $iterator = FileIterator::create($target);
+        foreach ($iterator as $file) {
+            /** @var SplFileInfo $file */
+            $filename = realpath($target->getSourceDirectory() . '/' . $file->getPathname());
+            if ($filename === $stubFile) {
+                return;
+            }
+        }
+
+        throw new Exception("stub file '{$target->getStub()}' not in file list");
     }
 }
