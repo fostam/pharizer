@@ -44,6 +44,7 @@ class Builder {
         $this->filename = $this->buildPharFilename($target->getName(), true);
         $this->filenameFinal = $this->buildPharFilename($target->getName(), false);
 
+        $this->validateStub($target);
         $this->createDestinationPath($this->filename);
         $this->createPhar($target);
         $this->rename();
@@ -141,6 +142,17 @@ class Builder {
 
         if (!mkdir($path, 0777, true)) {
             throw new Exception("can't create destination directory '{$path}'");
+        }
+    }
+
+    /**
+     * @param Target $target
+     * @throws Exception
+     */
+    private function validateStub(Target $target): void {
+        $stubFile = $target->getSourceDirectory() . '/' . $target->getStub();
+        if (!file_exists($stubFile)) {
+            throw new Exception("stub file '{$stubFile}' does not exist");
         }
     }
 }
