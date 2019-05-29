@@ -105,10 +105,12 @@ whether the file is included or excluded. If no pattern matches, the file is inc
 If you want to change the default behaviour to exclude, simply add `exclude: ".*"` as last filter.
 
 ### Caveats
-#### Quotes
-YAML does not allow characters like `*`, so when giving a pattern containing an asterisk, put it in double
-quotes:
-`- exclude: ".*"`
+#### YAML Escaping
+YAML does not allow characters like `*`, so when giving a pattern containing an asterisk, put it in single
+quotes. Avoid double quotes, as they don't work well with backslash escapes.
+```
+- exclude: '.*\.php'
+```
 #### Anchors
 Try to anchor patterns either with `^` and `$` or `/` to avoid unintended matching.
 
