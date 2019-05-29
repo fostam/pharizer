@@ -50,7 +50,7 @@ class Builder {
         $this->createPhar($target);
         $this->rename();
         $this->makeExecutable();
-        $this->printResult();
+        $this->printResult($target);
     }
 
     /**
@@ -88,15 +88,15 @@ class Builder {
     }
 
     /**
-     *
+     * @param Target $target
      */
-    public function printResult(): void {
+    public function printResult(Target $target): void {
         if ($this->input->getOption('quiet')) {
             return;
         }
 
         $size = filesize($this->filenameFinal);
-        $this->output->writeln("{$this->filenameFinal} built ({$size} bytes)");
+        $this->output->writeln("{$target->getStub()} built ({$size} bytes)");
     }
 
     /**
@@ -159,7 +159,7 @@ class Builder {
         $iterator = FileIterator::create($target);
         foreach ($iterator as $file) {
             /** @var SplFileInfo $file */
-            $filename = realpath($target->getSourceDirectory() . '/' . $file->getPathname());
+            $filename = realpath($file->getPathname());
             if ($filename === $stubFile) {
                 return;
             }
