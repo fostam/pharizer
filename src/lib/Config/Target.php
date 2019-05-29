@@ -6,7 +6,8 @@ class Target {
     const NAME             = 'name';
     const TYPE             = 'type';
     const SOURCE_DIRECTORY = 'source-directory';
-    const STUB             = 'stub';
+    const STUB_FILE        = 'stub-file';
+    const SHEBANG          = 'shebang';
     const COMPRESSION      = 'compression';
     const EXCLUDE_PHARIZER = 'exclude-pharizer';
     const FILTERS          = 'filters';
@@ -16,7 +17,8 @@ class Target {
         self::NAME             => ['string', null],
         self::TYPE             => ['string', 'phar'],
         self::SOURCE_DIRECTORY => ['string', '.'],
-        self::STUB             => ['string', null],
+        self::STUB_FILE        => ['string', null],
+        self::SHEBANG          => ['string', '#!/usr/bin/env php'],
         self::COMPRESSION      => ['string', 'none', ['none', 'gz', 'bz2']],
         self::EXCLUDE_PHARIZER => ['boolean', true],
         self::FILTERS          => [Filters::class, null],
@@ -67,7 +69,14 @@ class Target {
      * @return string
      */
     public function getStub(): string {
-        return $this->config[self::STUB];
+        return $this->config[self::STUB_FILE];
+    }
+
+    /**
+     * @return string
+     */
+    public function getShebang(): string {
+        return $this->config[self::SHEBANG];
     }
 
     /**
