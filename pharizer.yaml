@@ -1,0 +1,11 @@
+
+target-directory: dist
+
+targets:
+  pharizer:
+    type: phar
+    source-directory: .
+    stub-file: src/pharizer.php
+    filters:
+      - include: ^(src|vendor)/
+      - exclude: .*
