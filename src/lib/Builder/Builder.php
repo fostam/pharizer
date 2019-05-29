@@ -96,7 +96,7 @@ class Builder {
         }
 
         $size = filesize($this->filenameFinal);
-        $this->output->writeln("{$target->getStub()} built ({$size} bytes)");
+        $this->output->writeln("{$target->getName()} built ({$size} bytes)");
     }
 
     /**
