@@ -29,11 +29,11 @@ class Builder {
             else {
                 if (is_scalar($data[$key])) {
                     if (gettype($data[$key]) !== $definition[0]) {
-                        throw new ConfigSettingWrongTypeException("{$key}: {$data[$key]}");
+                        throw new ConfigSettingWrongTypeException($key, $data[$key]);
                     }
                     else {
                         if (isset($definition[2]) && !in_array($data[$key], $definition[2])) {
-                            throw new ConfigSettingInvalidValueException("{$key}: {$data[$key]}");
+                            throw new ConfigSettingInvalidValueException($key, $data[$key]);
                         }
                         $value = $data[$key];
                     }
