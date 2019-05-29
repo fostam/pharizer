@@ -45,16 +45,27 @@ class Builder {
     private function createPhar(Target $target): void {
         $iterator = FileIterator::create($target);
 
-        $filename = $this->buildPharFilename($target->getName());
+        // prepare names
+        $filename = $this->buildPharFilename($target->getName(), true);
         $alias = $this->buildPharAlias($target->getName());
 
+        // create destination directory
         $this->createDestinationPath($filename);
 
+        // build phar
         $phar = new Phar($filename, 0, $alias);
         $phar->buildFromIterator($iterator, $target->getSourceDirectory());
         $stub = $phar->createDefaultStub($target->getStub());
         $stub = $target->getShebang() . "\n" . $stub;
         $phar->setStub($stub);
+
+        // rename to final name (without forced extension)
+        $filenameFinal = $this->buildPharFilename($target->getName(), false);
+        if ($filenameFinal !== $filename) {
+            if (!rename($filename, $filenameFinal)) {
+                throw new Exception("can't rename '{$filename}' to '{$filenameFinal}'");
+            }
+        }
     }
 
     /**
@@ -69,10 +80,11 @@ class Builder {
 
     /**
      * @param string $name
+     * @param bool $forceExtension
      * @return string
      */
-    private function buildPharFilename(string $name): string {
-        if (!preg_match('#\.phar$#', $name)) {
+    private function buildPharFilename(string $name, bool $forceExtension): string {
+        if ($forceExtension && !preg_match('#\.phar$#', $name)) {
             $name .= '.phar';
         }
 
