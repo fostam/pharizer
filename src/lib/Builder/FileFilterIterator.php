@@ -30,11 +30,6 @@ class FileFilterIterator extends RecursiveFilterIterator {
         /** @var SplFileInfo $fileinfo */
         $fileinfo = $this->current();
 
-        // don't apply filter to directories
-        if ($fileinfo->isDir()) {
-            return true;
-        }
-
         $filename = $fileinfo->getPathname();
 
         // strip source-directory from beginning of path
