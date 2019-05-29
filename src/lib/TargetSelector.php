@@ -2,6 +2,7 @@
 
 namespace Pharizer;
 
+use Exception;
 use Pharizer\Config\Main;
 
 class TargetSelector {
@@ -9,7 +10,7 @@ class TargetSelector {
      * @param Main $config
      * @param array $targetNames
      * @return array
-     * @throws \Exception
+     * @throws Exception
      */
     public static function select(Main $config, array $targetNames = []): array {
         $targets = $config->getTargets();
