@@ -86,7 +86,7 @@ the filters.
 ## Filters
 ### Definition
 Filters are defined as a list of include and exclude regular expression (PCRE) patterns.
-By default, the regular expression are not anchored, i.e. if you want them to be anchored
+By default, the regular expressions are not anchored, i.e. if you want them to be anchored
 to the beginning or end of a file path, you have to use `^` or `$`.
 
 Delimiter escaping is handled internally, so it is *not* necessary to escape the slash character (`/`).
