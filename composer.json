@@ -3,7 +3,7 @@
   "description": "Create phar files / executables from a PHP project file structure",
   "keywords": ["phar", "executable", "archive", "binary", "script", "console"],
   "license": "Apache-2.0",
-  "type": "project",
+  "type": "library",
   "require": {
     "php": ">=7.2",
     "ext-phar": "*",
