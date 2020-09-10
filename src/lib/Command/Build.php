@@ -31,9 +31,10 @@ class Build extends Command {
     /**
      * @param InputInterface $input
      * @param OutputInterface $output
+     * @return int
      * @throws Exception
      */
-    protected function execute(InputInterface $input, OutputInterface $output): void {
+    protected function execute(InputInterface $input, OutputInterface $output): int {
         $config = Loader::fromFile($input->getOption('config-file'));
         $builder = new Builder($input, $output, $config);
 
@@ -42,5 +43,7 @@ class Build extends Command {
         foreach($targetList as $target) {
             $builder->build($target);
         }
+
+        return 0;
     }
 }
