@@ -28,7 +28,7 @@ class Target {
     private $pharizerExcludePattern = '\bvendor/(fostam|bin)/pharizer';
 
     /** @var array */
-    private $config = [];
+    private $config;
 
     /** @var string */
     private $baseDirectory;

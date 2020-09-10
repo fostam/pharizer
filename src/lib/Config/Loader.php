@@ -10,7 +10,7 @@ class Loader {
     private static $defaultConfigFile = 'pharizer.yaml';
 
     /**
-     * @param string $filename
+     * @param string|null $filename
      * @return Main
      * @throws Exception
      */

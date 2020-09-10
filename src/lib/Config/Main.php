@@ -15,7 +15,7 @@ class Main {
     ];
 
     /** @var array */
-    private $config = [];
+    private $config;
 
     /**
      * Main constructor.
