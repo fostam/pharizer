@@ -16,7 +16,7 @@ class Loader {
             $filename = self::$defaultConfigFile;
         }
 
-        if (!preg_match('#^/#', $filename)) {
+        if (!str_starts_with($filename, '/')) {
             $filename = getcwd() . DIRECTORY_SEPARATOR . $filename;
         }
 

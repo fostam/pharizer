@@ -17,7 +17,7 @@ class Main {
 
     public function __construct(array $data) {
         $this->config = Builder::build($data[self::BASE_DIRECTORY], $this->configDefinition, $data);
-        if (!preg_match('#^/#', $this->config[self::TARGET_DIRECTORY])) {
+        if (!str_starts_with($this->config[self::TARGET_DIRECTORY], '/')) {
             $this->config[self::TARGET_DIRECTORY] = $this->config[self::BASE_DIRECTORY] . '/' . $this->config[self::TARGET_DIRECTORY];
         }
     }

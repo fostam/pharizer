@@ -6,11 +6,8 @@ use Exception;
 
 class Filters {
     private array $filters = [];
-    private string $baseDirectory;
 
     public function __construct(string $baseDirectory, array $data) {
-        $this->baseDirectory = $baseDirectory;
-
         foreach($data as $filter => $filterData) {
             $this->filters[$filter] = new Filter($filterData);
         }
@@ -37,7 +34,7 @@ class Filters {
      * @param Filter $filter
      */
     public function appendFilter(Filter $filter): void {
-        array_push($this->filters, $filter);
+        $this->filters[] = $filter;
     }
 
     /**
