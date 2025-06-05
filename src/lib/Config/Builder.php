@@ -7,12 +7,6 @@ use Pharizer\Exception\ConfigSettingInvalidValueException;
 use Pharizer\Exception\ConfigSettingWrongTypeException;
 
 class Builder {
-    /**
-     * @param string $baseDirectory
-     * @param array $configDefinition
-     * @param array $data
-     * @return array
-     */
     public static function build(string $baseDirectory, array $configDefinition, array $data): array {
         $config = [];
         foreach($configDefinition as $key => $definition) {

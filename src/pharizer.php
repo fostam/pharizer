@@ -20,7 +20,7 @@ use Symfony\Component\Console\Application;
 
 $application = new Application();
 $application->setName('Pharizer');
-$application->setVersion('1.0.3');
+$application->setVersion('2.0.0');
 $application->add(new Build());
 $application->add(new ListFiles());
 try {

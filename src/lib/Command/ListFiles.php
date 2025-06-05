@@ -16,10 +16,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class ListFiles extends Command {
-    /**
-     *
-     */
-    protected function configure() {
+    protected function configure(): void {
         $this->setName('list-files');
         $this->setDescription('list files that would be included in targets');
         $this->setDefinition(
@@ -31,9 +28,6 @@ class ListFiles extends Command {
     }
 
     /**
-     * @param InputInterface $input
-     * @param OutputInterface $output
-     * @return int
      * @throws Exception
      */
     protected function execute(InputInterface $input, OutputInterface $output): int {

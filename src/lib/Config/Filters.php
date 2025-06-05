@@ -5,17 +5,9 @@ namespace Pharizer\Config;
 use Exception;
 
 class Filters {
-    /** @var array Filter */
-    private $filters = [];
+    private array $filters = [];
+    private string $baseDirectory;
 
-    /** @var string */
-    private $baseDirectory;
-
-    /**
-     * Filters constructor.
-     * @param string $baseDirectory
-     * @param array $data
-     */
     public function __construct(string $baseDirectory, array $data) {
         $this->baseDirectory = $baseDirectory;
 
@@ -32,8 +24,6 @@ class Filters {
     }
 
     /**
-     * @param $filter
-     * @return Filter
      * @throws Exception
      */
     public function getFilter(string $filter): Filter {
@@ -46,14 +36,14 @@ class Filters {
     /**
      * @param Filter $filter
      */
-    public function appendFilter(Filter $filter) {
+    public function appendFilter(Filter $filter): void {
         array_push($this->filters, $filter);
     }
 
     /**
      * @param Filter $filter
      */
-    public function prependFilter(Filter $filter) {
+    public function prependFilter(Filter $filter): void {
         array_unshift($this->filters, $filter);
     }
 }

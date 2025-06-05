@@ -7,9 +7,6 @@ use Pharizer\Config\Main;
 
 class TargetSelector {
     /**
-     * @param Main $config
-     * @param array $targetNames
-     * @return array
      * @throws Exception
      */
     public static function select(Main $config, array $targetNames = []): array {

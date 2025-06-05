@@ -6,12 +6,9 @@ use Exception;
 use Symfony\Component\Yaml\Yaml;
 
 class Loader {
-    /** @var string */
-    private static $defaultConfigFile = 'pharizer.yaml';
+    private static string $defaultConfigFile = 'pharizer.yaml';
 
     /**
-     * @param string|null $filename
-     * @return Main
      * @throws Exception
      */
     public static function fromFile(?string $filename): Main {

@@ -5,14 +5,8 @@ namespace Pharizer\Config;
 use Exception;
 
 class Targets {
-    /** @var array Target */
-    private $targets = [];
+    private array $targets = [];
 
-    /**
-     * Targets constructor.
-     * @param string $baseDirectory
-     * @param array $data
-     */
     public function __construct(string $baseDirectory, array $data) {
         foreach($data as $target => $targetData) {
             $targetData[Target::NAME] = $target;
@@ -28,8 +22,6 @@ class Targets {
     }
 
     /**
-     * @param $target
-     * @return Target
      * @throws Exception
      */
     public function getTarget($target): Target {

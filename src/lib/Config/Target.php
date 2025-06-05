@@ -12,8 +12,7 @@ class Target {
     const EXCLUDE_PHARIZER = 'exclude-pharizer';
     const FILTERS          = 'filters';
 
-    /** @var array */
-    private $configDefinition = [
+    private array $configDefinition = [
         self::NAME             => ['string', null],
         self::TYPE             => ['string', 'phar'],
         self::SOURCE_DIRECTORY => ['string', '.'],
@@ -24,20 +23,10 @@ class Target {
         self::FILTERS          => [Filters::class, null],
     ];
 
-    /** @var string */
-    private $pharizerExcludePattern = '\bvendor/(fostam|bin)/pharizer';
+    private string $pharizerExcludePattern = '\bvendor/(fostam|bin)/pharizer';
+    private array $config;
+    private string $baseDirectory;
 
-    /** @var array */
-    private $config;
-
-    /** @var string */
-    private $baseDirectory;
-
-    /**
-     * Target constructor.
-     * @param string $baseDirectory
-     * @param array $data
-     */
     public function __construct(string $baseDirectory, array $data) {
         $this->config = Builder::build($baseDirectory, $this->configDefinition, $data);
         $this->baseDirectory = $baseDirectory;
@@ -49,58 +38,34 @@ class Target {
         }
     }
 
-    /**
-     * @return string
-     */
     public function getName(): string {
         return $this->config[self::NAME];
     }
 
-    /**
-     * @return string
-     */
     public function getType(): string {
         return $this->config[self::TYPE];
     }
 
-    /**
-     * @return string
-     */
     public function getSourceDirectory(): string {
         return $this->baseDirectory . '/' . $this->config[self::SOURCE_DIRECTORY];
     }
 
-    /**
-     * @return string
-     */
     public function getStub(): string {
         return $this->config[self::STUB_FILE];
     }
 
-    /**
-     * @return string
-     */
     public function getShebang(): string {
         return $this->config[self::SHEBANG];
     }
 
-    /**
-     * @return string
-     */
     public function getCompression(): string {
         return $this->config[self::COMPRESSION];
     }
 
-    /**
-     * @return bool
-     */
     public function getExcludePharizer(): bool {
         return $this->config[self::EXCLUDE_PHARIZER];
     }
 
-    /**
-     * @return Filters
-     */
     public function getFilters(): Filters {
         return $this->config[self::FILTERS];
     }

@@ -14,10 +14,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class Build extends Command {
-    /**
-     *
-     */
-    protected function configure() {
+    protected function configure(): void {
         $this->setName('build');
         $this->setDescription('build targets');
         $this->setDefinition(
@@ -29,9 +26,6 @@ class Build extends Command {
     }
 
     /**
-     * @param InputInterface $input
-     * @param OutputInterface $output
-     * @return int
      * @throws Exception
      */
     protected function execute(InputInterface $input, OutputInterface $output): int {

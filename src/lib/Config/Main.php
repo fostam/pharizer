@@ -7,20 +7,14 @@ class Main {
     const TARGET_DIRECTORY = 'target-directory';
     const TARGETS          = 'targets';
 
-    /** @var array */
-    private $configDefinition = [
+    private array $configDefinition = [
         self::BASE_DIRECTORY   => ['string', '.'],
         self::TARGET_DIRECTORY => ['string', '.'],
         self::TARGETS          => [Targets::class, []],
     ];
 
-    /** @var array */
-    private $config;
+    private array $config;
 
-    /**
-     * Main constructor.
-     * @param array $data
-     */
     public function __construct(array $data) {
         $this->config = Builder::build($data[self::BASE_DIRECTORY], $this->configDefinition, $data);
         if (!preg_match('#^/#', $this->config[self::TARGET_DIRECTORY])) {
@@ -28,23 +22,14 @@ class Main {
         }
     }
 
-    /**
-     * @return string
-     */
     public function getBaseDirectory(): string {
         return $this->config[self::BASE_DIRECTORY];
     }
 
-    /**
-     * @return string
-     */
     public function getTargetDirectory(): string {
         return $this->config[self::TARGET_DIRECTORY];
     }
 
-    /**
-     * @return Targets
-     */
     public function getTargets(): Targets {
         return $this->config[self::TARGETS];
     }

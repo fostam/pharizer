@@ -9,15 +9,11 @@ class Filter {
     const TYPE_INCLUDE = 'include';
     const TYPE_EXCLUDE = 'exclude';
 
-    private $type = null;
-    private $pattern = null;
-    private $delimiter = '#';
+    private ?string $type = null;
+    private ?string $pattern = null;
+    private string $delimiter = '#';
 
-    /**
-     * Filter constructor.
-     * @param $data
-     */
-    public function __construct($data) {
+    public function __construct(array $data) {
         foreach($data as $key => $value) {
             if (!is_null($this->type)) {
                 throw new ConfigSettingWrongTypeException($key, $value);
@@ -38,17 +34,10 @@ class Filter {
         }
     }
 
-    /**
-     * @return string
-     */
     public function getType(): string {
         return $this->type;
     }
 
-    /**
-     * @param string $str
-     * @return false|int
-     */
     public function matches(string $str): bool {
         return boolval(preg_match($this->pattern, $str));
     }

@@ -10,22 +10,13 @@ use RecursiveIterator;
 use SplFileInfo;
 
 class FileFilterIterator extends RecursiveFilterIterator {
-    /** @var Target */
-    private $target;
+    private Target $target;
 
-    /**
-     * FileFilterIterator constructor.
-     * @param RecursiveIterator $iterator
-     * @param Target $target
-     */
     public function __construct(RecursiveIterator $iterator, Target $target) {
         $this->target = $target;
         parent::__construct($iterator);
     }
 
-    /**
-     * @return bool
-     */
     public function accept(): bool {
         /** @var SplFileInfo $fileinfo */
         $fileinfo = $this->current();
@@ -59,14 +50,10 @@ class FileFilterIterator extends RecursiveFilterIterator {
         return true;
     }
 
-    /**
-     * @return FileFilterIterator
-     */
     public function getChildren(): FileFilterIterator {
         $iterator = $this->getInnerIterator();
         /** @var RecursiveDirectoryIterator $iterator */
         $children = $iterator->getChildren();
-        /** @var RecursiveDirectoryIterator $children */
         return new self($children, $this->target);
     }
 }

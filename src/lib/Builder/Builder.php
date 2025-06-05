@@ -11,23 +11,12 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class Builder {
-    /** @var InputInterface */
-    private $input;
-    /** @var OutputInterface */
-    private $output;
-    /** @var Main */
-    private $config;
-    /** @var string */
-    private $filename;
-    /** @var string */
-    private $filenameFinal;
+    private InputInterface $input;
+    private OutputInterface $output;
+    private Main $config;
+    private string $filename;
+    private string $filenameFinal;
 
-    /**
-     * Builder constructor.
-     * @param InputInterface $input
-     * @param OutputInterface $output
-     * @param Main $config
-     */
     public function __construct(InputInterface $input, OutputInterface $output, Main $config) {
         $this->input = $input;
         $this->output = $output;
@@ -35,7 +24,6 @@ class Builder {
     }
 
     /**
-     * @param Target $target
      * @throws Exception
      */
     public function build(Target $target): void {
@@ -54,7 +42,6 @@ class Builder {
     }
 
     /**
-     * @param Target $target
      * @throws Exception
      */
     private function createPhar(Target $target): void {
@@ -109,11 +96,6 @@ class Builder {
         }
     }
 
-    /**
-     * @param string $name
-     * @param bool $forceExtension
-     * @return string
-     */
     private function buildPharFilename(string $name, bool $forceExtension): string {
         if ($forceExtension && !preg_match('#\.phar$#', $name)) {
             $name .= '.phar';
@@ -122,16 +104,11 @@ class Builder {
         return $this->config->getTargetDirectory() . '/' . $name;
     }
 
-    /**
-     * @param string $name
-     * @return string
-     */
     private function buildPharAlias(string $name): string {
         return basename($name);
     }
 
     /**
-     * @param string $filename
      * @throws Exception
      */
     private function createDestinationPath(string $filename): void {
@@ -147,7 +124,6 @@ class Builder {
     }
 
     /**
-     * @param Target $target
      * @throws Exception
      */
     private function validateStub(Target $target): void {
